@@ -23,11 +23,6 @@ class StartFragment : Fragment() {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        val sharedPref = activity?.getSharedPreferences("com.example.aplikacjagdynia.PREFERENCE_FILE_KEY", Context.MODE_PRIVATE)
-        val commentCount = sharedPref?.getInt("comment_count", 0)
-
-        binding.commentCountText.setText("Liczba komentarzy: $commentCount")
-
         return view
     }
 }
