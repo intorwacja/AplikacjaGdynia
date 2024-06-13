@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AplikacjaGdynia</string>
+    <string name="thumbnail">Gdynia</string>
+    <string name="buttonImages">Zdjęcia</string>
+    <string name="buttonCiekawostki">Ciekawostki</string>
+    <string name="buttonKomentarze">Komentarze</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="ciekawostki_list">
+        <item>Ciekawostka 1: Już w średniowieczu w miejscu Gdyni istniała wieś rybacka.</item>
+        <item>Ciekawostka 2: Gdynia uzyskała prawa miejskie 10 lutego 1926 roku.</item>
+        <item>Ciekawostka 3: Gdynia powstawała w okresie międzywojennym dlatego brak jest w jej zabudowie starszych stylów architektonicznych.</item>
+    </string-array>
+
+    <string name="comment">Skomentuj</string>
+</resources>
