@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.aplikacjagdynia.databinding.FragmentKomentarzeBinding
 
@@ -26,21 +27,24 @@ class KomentarzeFragment : Fragment() {
         val view = binding.root
 
         dbHelper = DatabaseHelper(requireContext())
-
         val comments = dbHelper.getComments()
 
-        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, comments)
+        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, comments.map { it.text })
         binding.commentsList.adapter = adapter
 
         binding.addCommentButton.setOnClickListener {
             val comment = binding.inputComment.text.toString()
             if (comment.isNotEmpty()) {
                 dbHelper.addComment(comment)
-                adapter.clear()
-                adapter.addAll(dbHelper.getComments())
-                adapter.notifyDataSetChanged()
+                updateComments()
                 binding.inputComment.text.clear()
             }
+        }
+
+        binding.commentsList.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
+            val comment = dbHelper.getComments()[position]
+            val intent = CommentDetailActivity.newIntent(requireContext(), comment)
+            startActivity(intent)
         }
 
         return view
@@ -48,20 +52,8 @@ class KomentarzeFragment : Fragment() {
 
     private fun updateComments() {
         adapter.clear()
-        adapter.addAll(dbHelper.getComments())
+        adapter.addAll(dbHelper.getComments().map { it.text })
         adapter.notifyDataSetChanged()
-        saveCommentCount()
-    }
-
-    private fun saveCommentCount() {
-        val sharedPref = activity?.getSharedPreferences(
-            "com.example.aplikacjagdynia.PREFERENCE_FILE_KEY",
-            Context.MODE_PRIVATE
-        )
-        with(sharedPref?.edit()) {
-            this?.putInt("comment_count", adapter.count)
-            this?.apply()
-        }
     }
 
     override fun onDestroyView() {
